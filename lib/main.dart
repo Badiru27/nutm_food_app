@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:nutm_food_app/features/auth/auth._page.dart';
+import 'package:nutm_food_app/features/auth/page/auth_page.dart';
+import 'package:nutm_food_app/locator.dart';
 import 'package:nutm_food_app/themes/app_theme.dart';
 
-void main() {
+void main() async {
+  setUpLocator();
   runApp(const MyApp());
 }
 
@@ -15,12 +17,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScreenUtilInit(
       designSize: const Size(375, 812),
-      builder: (context, child)=>MaterialApp(
-        title: 'Flutter Demo',
-        theme: AppTheme.theme,
-        home: const AuthPage()
-      ),
+      builder: (context, child) => MaterialApp(
+          title: 'Flutter Demo', theme: AppTheme.theme, home: const AuthPage()),
     );
   }
 }
-

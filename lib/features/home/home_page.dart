@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nutm_food_app/features/auth/auth._page.dart';
+import 'package:nutm_food_app/features/auth/page/auth_page.dart';
 import 'package:nutm_food_app/shared/app_button.dart';
 import 'package:nutm_food_app/themes/app_theme.dart';
 import 'package:nutm_food_app/util/ui_helpers.dart';
@@ -55,10 +55,13 @@ class HomePage extends StatelessWidget {
                 ),
               ),
               UiHelpers.verticalSpacer(50),
-              AppButton(
-                title: 'Get breakfast',
-                // isBusy: ref.watch(authControllerProvider).isLoading,
-                onButtonTapped: () {},
+              Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                child: AppButton(
+                  title: 'Get breakfast',
+                  // isBusy: ref.watch(authControllerProvider).isLoading,
+                  onButtonTapped: () {},
+                ),
               ),
               UiHelpers.verticalSpacer(150),
             ],
