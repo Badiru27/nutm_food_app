@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:nutm_food_app/features/auth/bloc/auth_bloc.dart';
+import 'package:nutm_food_app/app/bloc/auth_bloc.dart';
+import 'package:nutm_food_app/features/auth/bloc/login_bloc.dart';
 import 'package:nutm_food_app/features/home/home_page.dart';
 import 'package:nutm_food_app/shared/app_button.dart';
 import 'package:nutm_food_app/shared/app_input_field.dart';
@@ -9,23 +11,35 @@ import 'package:nutm_food_app/shared/app_password_input_field.dart';
 import 'package:nutm_food_app/themes/app_theme.dart';
 import 'package:nutm_food_app/util/ui_helpers.dart';
 
-class AuthPage extends StatelessWidget {
-  const AuthPage({Key? key}) : super(key: key);
+class LogInPage extends HookWidget {
+  const LogInPage({Key? key}) : super(key: key);
   static final _formKey = GlobalKey<FormState>();
+
+  static const String routes = '/login';
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final loginBloc = BlocProvider.of<LoginBloc>(context);
+    final email = useTextEditingController();
+    final password = useTextEditingController();
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Let\'s Sign In',
-          style: theme.textTheme.headline5,
+        appBar: AppBar(
+          title: Text(
+            'Let\'s Sign In',
+            style: theme.textTheme.headline5,
+          ),
         ),
-      ),
-      body: BlocBuilder<AuthBloc, AuthState>(
-        builder: (context, state) {
-          return SingleChildScrollView(
+        body: BlocListener<LoginBloc, LoginState>(
+          listener: (_, state) {
+          if(state is LoginFailure){
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text(state.error),
+                backgroundColor: Theme.of(context).errorColor,
+              ));
+          }
+          },
+          child: SingleChildScrollView(
             reverse: true,
             physics: const ClampingScrollPhysics(),
             child: Padding(
@@ -42,6 +56,13 @@ class AuthPage extends StatelessWidget {
                       style: theme.textTheme.headline3,
                     ),
                     UiHelpers.verticalSpacer(57),
+                    Align(
+                      alignment: Alignment.center,
+                      child: Text(
+                        'Sign in to continue',
+                        style: theme.textTheme.subtitle1,
+                      ),
+                    ),
                     AppInputField(
                       hintText: 'Email',
                       hintStyle: theme.textTheme.bodyText1,
@@ -75,10 +96,12 @@ class AuthPage extends StatelessWidget {
                       title: 'Sign In',
                       // isBusy: ref.watch(authControllerProvider).isLoading,
                       onButtonTapped: () {
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const HomePage()));
+                        loginBloc.add(LoginInButtonPressed(
+                            email: email.text, password: password.text));
+                        // Navigator.pushReplacement(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (context) => const HomePage()));
                       },
                     ),
                     UiHelpers.verticalSpacer(90),
@@ -114,9 +137,7 @@ class AuthPage extends StatelessWidget {
                 ),
               ),
             ),
-          );
-        },
-      ),
-    );
+          ),
+        ));
   }
 }

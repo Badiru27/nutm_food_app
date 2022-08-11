@@ -7,6 +7,8 @@ import 'package:nutm_food_app/util/ui_helpers.dart';
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
+  static const String route = '/home';
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -23,11 +25,14 @@ class HomePage extends StatelessWidget {
                   Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const AuthPage()));
+                          builder: (context) => const LogInPage()));
                 }
               },
               itemBuilder: (context) => {'Logout'}
-                  .map((e) => PopupMenuItem<String>(value: e,child: Text(e),))
+                  .map((e) => PopupMenuItem<String>(
+                        value: e,
+                        child: Text(e),
+                      ))
                   .toList())
         ],
       ),
@@ -56,7 +61,7 @@ class HomePage extends StatelessWidget {
               ),
               UiHelpers.verticalSpacer(50),
               Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: AppButton(
                   title: 'Get breakfast',
                   // isBusy: ref.watch(authControllerProvider).isLoading,

@@ -3,12 +3,15 @@ class AppApiEndpoint{
    const AppApiEndpoint._();
 
   static const String scheme = 'https';
-  static const String host = 'localhost:3000/api/v1';
+  static const String host = 'localhost';
   static const int receiveTimeout = 3000;
   static const int sendTimeout = 5000;
+  static const apiExtension = ':3000/api/v1';
+
+
 
   static Uri baseUri =
-      Uri(scheme: scheme, host: host, path: '/');
+      Uri(scheme: scheme, host: host, path: ':3000/api/v1');
 
   static Uri registerURI =  baseUri.replace(path: '/auth/register');
   static Uri loginURI =  baseUri.replace(path: '/auth/login');
