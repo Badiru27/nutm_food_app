@@ -1,10 +1,11 @@
 part of 'login_bloc.dart';
 
 abstract class LoginState extends Equatable {
-  const LoginState();
+    final bool isObscured;
+  const LoginState({this.isObscured = true});
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [isObscured];
 }
 
 
@@ -21,4 +22,10 @@ class LoginFailure extends LoginState {
 
   @override
   List<Object> get props => [error];
+}
+
+class IsObscured extends LoginState {
+  const IsObscured({required bool isObscured}) : super(isObscured: isObscured);
+  @override
+  List<Object> get props => [isObscured];
 }

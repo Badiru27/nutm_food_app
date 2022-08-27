@@ -1,41 +1,57 @@
-import 'dart:convert';
-
 import 'package:equatable/equatable.dart';
 
 class User extends Equatable {
-  final String email;
-  final String name;
-  final String password;
+  final Person person;
   final String token;
   const User({
-    required this.email,
-    required this.name,
-    required this.password,
+    required this.person,
     required this.token,
   });
 
   @override
-  List<Object?> get props => [email, name, password, token];
-
+  List<Object?> get props => [person, token];
 
   Map<String, dynamic> toJson() {
-    final result = <String, dynamic>{};
-
-    result.addAll({'email': email});
-    result.addAll({'name': name});
-    result.addAll({'password': password});
-    result.addAll({'token': token});
-
-    return result;
+    return {
+      'user': person.toJson(),
+      'token': token,
+    };
   }
 
   factory User.fromJson(Map<String, dynamic> map) {
     return User(
-      email: map['email'] ?? '',
-      name: map['name'] ?? '',
-      password: map['password'] ?? '',
+      person: Person.fromJson(map['user']),
       token: map['token'] ?? '',
     );
   }
+}
 
+class Person extends Equatable {
+  final String email;
+  final String name;
+  final String password;
+  const Person({
+    required this.email,
+    required this.name,
+    required this.password,
+  });
+
+  @override
+  List<Object?> get props => [email, name, password];
+
+  Map<String, dynamic> toJson() {
+    return {
+      'email': email,
+      'name': name,
+      'password': password,
+    };
+  }
+
+  factory Person.fromJson(Map<String, dynamic> map) {
+    return Person(
+      email: map['email'] ?? '',
+      name: map['name'] ?? '',
+      password: map['password'] ?? '',
+    );
+  }
 }

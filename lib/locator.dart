@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:nutm_food_app/service/api_service.dart';
 import 'package:nutm_food_app/service/auth_service.dart';
+import 'package:nutm_food_app/service/food_service.dart';
 import 'package:nutm_food_app/service/local_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -14,4 +15,6 @@ Future<void> setUpLocator() async {
   final sharedPreferences = await SharedPreferences.getInstance();
   locator.registerLazySingleton<LocalStorageService>(
       () => LocalStorageService(sharedPreferences));
+  locator.registerLazySingleton<FoodService>(
+      () => FoodService(apiService: locator(), localStorageService: locator(), authService: locator()));
 }

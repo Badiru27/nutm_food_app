@@ -5,8 +5,10 @@ import 'package:nutm_food_app/app/bloc/auth_bloc.dart';
 import 'package:nutm_food_app/app/bloc_observer.dart';
 import 'package:nutm_food_app/app_container.dart';
 import 'package:nutm_food_app/features/auth/bloc/login_bloc.dart';
+import 'package:nutm_food_app/features/home/bloc/home_bloc.dart';
 import 'package:nutm_food_app/locator.dart';
 import 'package:nutm_food_app/service/auth_service.dart';
+import 'package:nutm_food_app/service/food_service.dart';
 import 'package:nutm_food_app/themes/app_theme.dart';
 
 void main() async {
@@ -22,6 +24,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final authService = locator<AuthService>();
+    final foodService = locator<FoodService>();
     return ScreenUtilInit(
       designSize: const Size(375, 812),
       builder: (context, child) => MultiBlocProvider(
@@ -32,6 +35,9 @@ class MyApp extends StatelessWidget {
           ),
           BlocProvider<LoginBloc>(
             create: (context) => LoginBloc(authService: authService,  authBloc:  BlocProvider.of<AuthBloc>(context)),
+          ),
+          BlocProvider<HomeBloc>(
+            create: (context) => HomeBloc(foodService: foodService)..add(HomeLoaded()),
           ),
         ],
         child: MaterialApp(

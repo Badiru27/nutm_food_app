@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:nutm_food_app/app/bloc/auth_bloc.dart';
@@ -17,6 +16,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         _authService = authService,
         super(LoginInitial()) {
     on<LoginInButtonPressed>(_onLoggedInButtonPressed);
+    on<LogOutButtonPressed>(_onLoggedOutButtonPressed);
+    on<PasswordIconTapped>(_onPasswordIconTapped);
+
   }
 
   FutureOr<void> _onLoggedInButtonPressed(
@@ -30,10 +32,20 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         emit(LoginSuccess());
         emit(LoginInitial());
       } else {
-         emit(const LoginFailure(error: 'Some wired just happen'));
+         emit(const LoginFailure(error: 'Invalid credentials'));
       }
     } catch (e) {
-       emit(LoginFailure(error: e.toString()));
+       emit( const LoginFailure(error: 'It\'s not your fault, it\'s our fault'));
     }
+  }
+
+  FutureOr<void> _onLoggedOutButtonPressed(LogOutButtonPressed event, Emitter<LoginState> emit) {
+    _authService.deleteUser();
+    _authBloc.add(LoggedOut());
+    emit(LoginInitial());
+  }
+
+  FutureOr<void> _onPasswordIconTapped(PasswordIconTapped event, Emitter<LoginState> emit) {
+    emit(IsObscured(isObscured: !state.isObscured));
   }
 }

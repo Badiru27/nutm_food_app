@@ -37,8 +37,11 @@ class AppButton extends StatelessWidget {
       onPressed: onButtonTapped,
       child: isBusy
           ? const Center(
-              child: CircularProgressIndicator(
-                color: AppTheme.white,
+              child: Padding(
+                padding: EdgeInsets.symmetric(vertical: 10),
+                child: CircularProgressIndicator(
+                  color: AppTheme.white,
+                ),
               ),
             )
           : Row(

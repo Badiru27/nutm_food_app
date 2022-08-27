@@ -25,9 +25,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       if (user != null) {
         emit(AuthAuthenticated(
             user: User(
-                email: user.email,
-                name: user.name,
-                password: user.password,
+                person: user.person,
                 token: user.token)));
       } else {
         emit(AuthNotAuthenticated());
