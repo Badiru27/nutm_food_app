@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nutm_food_app/features/report/bloc/report_bloc.dart';
+import 'package:nutm_food_app/features/report/pages/food_report_detail_page.dart';
 import 'package:nutm_food_app/features/report/widgets/report_card_widget.dart';
 import 'package:nutm_food_app/features/report/widgets/report_filter.dart';
 import 'package:nutm_food_app/util/formatter.dart';
@@ -39,17 +40,29 @@ class FoodReportPage extends StatelessWidget {
                     child: ListView.builder(
                         itemCount: state.foodReports.length,
                         shrinkWrap: true,
-                        itemBuilder: (context, index) => BookedPlaceCard(
-                              name: state.foodReports[index].meal,
-                              date: state.foodReports[index].foodId,
-                              image:
-                                  state.foodReports[index].meal == "breakfast"
-                                      ? 'assets/breakfast.jpg'
-                                      : state.foodReports[index].meal == "lunch"
-                                          ? 'assets/lunch.jpg'
-                                          : 'assets/dinner.jpg',
-                              totalPerson: state.foodReports[index].totalPerson,
-                            )));
+                        itemBuilder: (context, index) => GestureDetector(
+                          onTap: (){
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => FoodReportDetailPage(
+                                  report: state.foodReports[index],
+                                ),
+                              ),
+                            );
+                          },
+                          child: BookedPlaceCard(
+                                name: state.foodReports[index].meal,
+                                date: state.foodReports[index].foodId,
+                                image:
+                                    state.foodReports[index].meal == "breakfast"
+                                        ? 'assets/breakfast.jpg'
+                                        : state.foodReports[index].meal == "lunch"
+                                            ? 'assets/lunch.jpg'
+                                            : 'assets/dinner.jpg',
+                                totalPerson: state.foodReports[index].totalPerson,
+                              ),
+                        )));
               }
               return const Center(child: Text('No Data'));
             })

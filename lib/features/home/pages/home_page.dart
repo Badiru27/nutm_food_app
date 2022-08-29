@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nutm_food_app/features/auth/bloc/login_bloc.dart';
 import 'package:nutm_food_app/features/home/bloc/home_bloc.dart';
-import 'package:nutm_food_app/features/report/pages/food_report.dart';
+import 'package:nutm_food_app/features/report/pages/food_report_page.dart';
 import 'package:nutm_food_app/shared/app_button.dart';
 import 'package:nutm_food_app/themes/app_theme.dart';
 import 'package:nutm_food_app/util/ui_helpers.dart';
