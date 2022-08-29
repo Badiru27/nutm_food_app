@@ -16,8 +16,8 @@ class AppApiEndpoint{
   static Uri registerURI =  baseUri.replace(path: '/api/v1/auth/register');
   static Uri loginURI =  baseUri.replace(path: '/api/v1/auth/login');
   static Uri signFoodURI =  baseUri.replace(path: '/api/v1/food');
-  static Uri getAllMonthFoodURI(String month) => baseUri.replace(path: '/api/v1/food/$month');
-  static Uri getAllVendorMonthFoodURI(String month, String meal) => baseUri.replace(path: '/api/v1/food/$month/vendor/$meal');
+  static Uri getAllMonthFoodURI(String month) => baseUri.replace(path: '/api/v1/food/all-month-food/$month');
+  static Uri getAllVendorMonthFoodURI(String month, String meal) => baseUri.replace(path: '/api/v1/food/all-vendor-month-food/$month/vendor/$meal');
   static Uri getAllVendorFoodURI(String date, String meal) => baseUri.replace(path: '/api/v1/food/$date/vendor/$meal');
   static Uri getAllDayFoodURI(String date) => baseUri.replace(path: '/api/v1/food/$date/vendor');
 

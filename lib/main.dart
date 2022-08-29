@@ -6,8 +6,10 @@ import 'package:nutm_food_app/app/bloc_observer.dart';
 import 'package:nutm_food_app/app_container.dart';
 import 'package:nutm_food_app/features/auth/bloc/login_bloc.dart';
 import 'package:nutm_food_app/features/home/bloc/home_bloc.dart';
+import 'package:nutm_food_app/features/report/bloc/report_bloc.dart';
 import 'package:nutm_food_app/locator.dart';
 import 'package:nutm_food_app/service/auth_service.dart';
+import 'package:nutm_food_app/service/food_report_service.dart';
 import 'package:nutm_food_app/service/food_service.dart';
 import 'package:nutm_food_app/themes/app_theme.dart';
 
@@ -25,6 +27,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final authService = locator<AuthService>();
     final foodService = locator<FoodService>();
+    final foodReportService = locator<FoodReportService>();
     return ScreenUtilInit(
       designSize: const Size(375, 812),
       builder: (context, child) => MultiBlocProvider(
@@ -34,11 +37,18 @@ class MyApp extends StatelessWidget {
                 AuthBloc(authService: authService)..add(AppStarted()),
           ),
           BlocProvider<LoginBloc>(
-            create: (context) => LoginBloc(authService: authService,  authBloc:  BlocProvider.of<AuthBloc>(context)),
+            create: (context) => LoginBloc(
+                authService: authService,
+                authBloc: BlocProvider.of<AuthBloc>(context)),
           ),
           BlocProvider<HomeBloc>(
-            create: (context) => HomeBloc(foodService: foodService)..add(HomeLoaded()),
+            create: (context) =>
+                HomeBloc(foodService: foodService)..add(HomeLoaded()),
           ),
+          BlocProvider<ReportBloc>(
+              create: (context) =>
+                  ReportBloc(foodReportService: foodReportService)
+                    ..add(LoadReportPageWithCurrentMonth())),
         ],
         child: MaterialApp(
             title: 'Flutter Demo',

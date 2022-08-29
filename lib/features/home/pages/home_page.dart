@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nutm_food_app/features/auth/bloc/login_bloc.dart';
 import 'package:nutm_food_app/features/home/bloc/home_bloc.dart';
+import 'package:nutm_food_app/features/report/pages/food_report.dart';
 import 'package:nutm_food_app/shared/app_button.dart';
 import 'package:nutm_food_app/themes/app_theme.dart';
 import 'package:nutm_food_app/util/ui_helpers.dart';
@@ -29,9 +30,11 @@ class HomePage extends StatelessWidget {
               onSelected: (String value) {
                 if (value == 'Logout') {
                   loginBloc.add(LogOutButtonPressed());
+                }else if(value == 'Food Report'){
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const FoodReportPage()));
                 }
               },
-              itemBuilder: (context) => {'Logout'}
+              itemBuilder: (context) => {'Logout', 'Food Report'}
                   .map((e) => PopupMenuItem<String>(
                         value: e,
                         child: Text(e),
